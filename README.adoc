@@ -1,0 +1,13 @@
+= asciidoc-utils
+
+Some utilities for scripts outputting and/or manipulating asciidoc.
+
+== Usage
+
+Just `source src/main.sh` in your script to import the functions. See the files
+in `src/` for the functions offered, or look at `tests/` for examples.
+
+== Tests
+
+The tests are written using https://github.com/sstephenson/bats[bats]. Acquire
+bats and run `bats tests` to run the test suite.
