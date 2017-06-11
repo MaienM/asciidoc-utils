@@ -10,3 +10,4 @@ adoc_subreport() {
     done
     adoc_strip_header | sed "s/^=/$header_prefix&/"
 }
+

@@ -1,52 +1,50 @@
 #!/usr/bin/env bats
 
-setup() {
-    load "source"
-    load "asserts"
-}
+load setup
 
 @test "adoc_add_to_header - simple header" {
-    result=$((
-        echo "= Hello"
-    ) | adoc_add_to_header "Test")
-    expected=$(
-        echo "= Hello"
-        echo "Test"
-    )
+    result=$(unindent "
+        = Hello
+    " | runsh 'adoc_add_to_header "Test"')
+    expected=$(unindent "
+        = Hello
+        Test
+    ")
     assert_equal "$expected" "$result"
 }
 
 @test "adoc_add_to_header - no header" {
-    result=$((
-        echo "Hello"
-    ) | adoc_add_to_header "Test")
-    expected=$(
-        echo "Test"
-        echo
-        echo "Hello"
-    )
+    result=$(unindent "
+        Hello
+    " | runsh 'adoc_add_to_header "Test"')
+    expected=$(unindent "
+        Test
+        
+        Hello
+    ")
     assert_equal "$expected" "$result"
 }
 
 @test "adoc_add_to_header - document with header" {
-    result=$((
-        echo "= Hello"
-        echo "World"
-        echo ":test: 1"
-        echo
-        echo "== Foo"
-        echo
-        echo "Lorem Ipsum"
-    ) | adoc_add_to_header "Test")
-    expected=$(
-        echo "= Hello"
-        echo "World"
-        echo ":test: 1"
-        echo "Test"
-        echo
-        echo "== Foo"
-        echo
-        echo "Lorem Ipsum"
-    )
+    result=$(unindent "
+        = Hello
+        World
+        :test: 1
+        
+        == Foo
+        
+        Lorem Ipsum
+    " | runsh 'adoc_add_to_header "Test"')
+    expected=$(unindent "
+        = Hello
+        World
+        :test: 1
+        Test
+        
+        == Foo
+        
+        Lorem Ipsum
+    ")
     assert_equal "$expected" "$result"
 }
+

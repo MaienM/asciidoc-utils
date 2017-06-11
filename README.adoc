@@ -11,3 +11,4 @@ in `src/` for the functions offered, or look at `tests/` for examples.
 
 The tests are written using https://github.com/sstephenson/bats[bats]. Acquire
 bats and run `bats tests` to run the test suite.
+

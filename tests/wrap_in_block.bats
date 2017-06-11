@@ -1,80 +1,90 @@
 #!/usr/bin/env bats
 
-setup() {
-    load "source"
-    load "asserts"
-}
+load setup
 
 @test "adoc_wrap_in_block - simple text" {
-    result=$((
-        echo "Lorem Ipsum"
-    ) | adoc_wrap_in_block "----")
-    expected=$(
-        echo "----"
-        echo "Lorem Ipsum"
-        echo "----"
-    )
+    result=$(unindent "
+        Lorem Ipsum
+    " | runsh 'adoc_wrap_in_block "----"')
+    expected=$(unindent "
+        ----
+        Lorem Ipsum
+        ----
+    ")
     assert_equal "$expected" "$result"
 }
 
 @test "adoc_wrap_in_block - with empty lines" {
-    result=$((
-        echo "Lorem Ipsum"
-        echo
-        echo "Dolor Sit Amet"
-        echo
-    ) | adoc_wrap_in_block "----")
-    expected=$(
-        echo "----"
-        echo "Lorem Ipsum"
-        echo
-        echo "Dolor Sit Amet"
-        echo
-        echo "----"
-    )
+    result=$(unindent "
+        Lorem Ipsum
+
+        Dolor Sit Amet
+
+    " | runsh 'adoc_wrap_in_block "----"')
+    expected=$(unindent "
+        ----
+        Lorem Ipsum
+
+        Dolor Sit Amet
+
+        ----
+    ")
     assert_equal "$expected" "$result"
 }
 
 @test "adoc_wrap_in_block - containing block delimiter" {
-    result=$((
-        echo "Lorem Ipsum"
-        echo "----"
-        echo "Dolor Sit Amet"
-    ) | adoc_wrap_in_block "----")
-    expected=$(
-        echo "----"
-        echo "Lorem Ipsum"
-        echo -e "\u200B----"
-        echo "Dolor Sit Amet"
-        echo "----"
-    )
+    result=$(unindent "
+        Lorem Ipsum
+        ----
+        Dolor Sit Amet
+    " | runsh 'adoc_wrap_in_block "----"')
+    expected=$(unindent "
+        ----
+        Lorem Ipsum
+        \u200B----
+        Dolor Sit Amet
+        ----
+    ")
     assert_equal "$expected" "$result"
 }
 
 @test "adoc_wrap_in_block - containing not quite block delimiter" {
-    result=$((
-        echo "Lorem Ipsum"
-        echo "------"
-        echo "Dolor Sit Amet"
-    ) | adoc_wrap_in_block "----")
-    expected=$(
-        echo "----"
-        echo "Lorem Ipsum"
-        echo "------"
-        echo "Dolor Sit Amet"
-        echo "----"
-    )
+    result=$(unindent "
+        Lorem Ipsum
+        ------
+        Dolor Sit Amet
+    " | runsh 'adoc_wrap_in_block "----"')
+    expected=$(unindent "
+        ----
+        Lorem Ipsum
+        ------
+        Dolor Sit Amet
+        ----
+    ")
     assert_equal "$expected" "$result"
 }
 
 @test "adoc_wrap_in_block - special delimiter" {
-    result=$((
-        echo "Lorem Ipsum"
-    ) | adoc_wrap_in_block "....")
-    expected=$(
-        echo "...."
-        echo "Lorem Ipsum"
-        echo "...."
-    )
+    result=$(unindent "
+        Lorem Ipsum
+    " | runsh 'adoc_wrap_in_block "...."')
+    expected=$(unindent "
+        ....
+        Lorem Ipsum
+        ....
+    ")
     assert_equal "$expected" "$result"
 }
+
+@test "adoc_wrap_in_block - special delimiter is escaped properly" {
+    result=$(unindent "
+        ----
+    " | runsh 'adoc_wrap_in_block "...."')
+    expected=$(unindent "
+        ....
+        ----
+        ....
+    ")
+    assert_equal "$expected" "$result"
+}
+

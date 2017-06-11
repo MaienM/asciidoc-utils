@@ -13,3 +13,4 @@ adoc_wrap_in_block() {
     sed "s/^$(_sed_escape "$delim")$/$(echo -e "\u200B")&/"
     echo "$delim"
 }
+

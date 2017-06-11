@@ -27,3 +27,4 @@ adoc_add_to_header() {
         }
     '
 }
+

@@ -13,3 +13,4 @@ adoc_strip_header() {
         }
     '
 }
+
