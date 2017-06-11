@@ -6,11 +6,12 @@ _sed_escape() {
 
 # Wrap in a block
 adoc_wrap_in_block() {
+    zws=$(printf "\342\200\213\012")
     delim="$@"
     echo "$delim"
     # Insert a zero-width space before any line that's just the block delimiter
     # to prevent it from being picked up
-    sed "s/^$(_sed_escape "$delim")$/$(echo -e "\u200B")&/"
+    sed "s/^$(_sed_escape "$delim")$/$zws&/"
     echo "$delim"
 }
 

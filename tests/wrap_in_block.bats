@@ -33,6 +33,7 @@ load setup
 }
 
 @test "adoc_wrap_in_block - containing block delimiter" {
+    zws=$(printf "\342\200\213\012")
     result=$(unindent "
         Lorem Ipsum
         ----
@@ -41,7 +42,7 @@ load setup
     expected=$(unindent "
         ----
         Lorem Ipsum
-        \u200B----
+        ${zws}----
         Dolor Sit Amet
         ----
     ")

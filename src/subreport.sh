@@ -5,7 +5,7 @@
 adoc_subreport() {
     levels=$((${1:-1} + 0))
     header_prefix=""
-    for ((i=0; i< $levels; i++)); do
+    for i in $(seq 1 $levels); do
         header_prefix="$header_prefix="
     done
     adoc_strip_header | sed "s/^=/$header_prefix&/"

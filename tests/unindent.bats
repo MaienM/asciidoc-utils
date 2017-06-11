@@ -12,9 +12,9 @@ load setup
 
 @test "unindent - escape sequences" {
     result=$(unindent "
-        Lorem Ipsum\u3000
+        Lorem Ipsum\t
     ")
-    expected=$(echo -e "Lorem Ipsum\u3000")
+    expected="Lorem Ipsum\t"
     assert_equal "$expected" "$result"
 }
 
@@ -61,10 +61,11 @@ load setup
 }
 
 @test "unindent - multiline w/mixed tabs/spaces" {
+    tab=$(printf "\t")
     result=$(unindent "
-        \tLorem Ipsum
+        ${tab}Lorem Ipsum
 
-        \tDolor Sit Amet
+        ${tab}Dolor Sit Amet
     ")
     expected=$(
         echo "Lorem Ipsum"

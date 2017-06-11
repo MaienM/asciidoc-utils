@@ -9,7 +9,7 @@ runsh() {
     # Build the command line
     cmd=""
     for file in "${files[@]}"; do
-        cmd="$cmd source $file;"
+        cmd="$cmd . $file;"
     done
 
     # Run the command in a subshell
@@ -28,9 +28,9 @@ runsh() {
 # "hello world
 # stuff"
 #
-# Also expands escape sequences.
+# Does NOT expand escape sequences
 unindent() {
-    echo -e "$@" | awk '
+    /bin/echo "$@" | awk '
         BEGIN {
             getline
             # Skip empty first line
