@@ -1,0 +1,11 @@
+# vi:ts=4:sw=4:sts=4:et
+
+stages:
+    - test
+
+test:
+    stage: test
+    image: alpine
+    script:
+        - apk add --no-cache bash
+        - ci/test.sh

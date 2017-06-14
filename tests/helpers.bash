@@ -4,7 +4,7 @@ runsh() {
     files=()
     while IFS=  read -r -d $'\0'; do
         files+=("$REPLY")
-    done < <(find "${BATS_TEST_DIRNAME/tests*}/src" -type f -name "*.sh" -print0)
+    done < <(find "$PROJECT_SOURCES_PATH" -type f -name "*.sh" -print0)
 
     # Build the command line
     cmd=""
@@ -30,42 +30,7 @@ runsh() {
 #
 # Does NOT expand escape sequences
 unindent() {
-    /bin/echo "$@" | awk '
-        BEGIN {
-            getline
-            # Skip empty first line
-            getline
-
-            # Store all lines in an array, expect the last (empty) line
-            lastline=$0
-            while (getline) {
-                lines[NR-2] = lastline
-                lastline=$0
-            }
-
-            # Detect shared indent
-            l = lines[1]
-            sub(/^[ \t]+/, "", l)
-            indent = substr(lines[1], 0, length(lines[1]) - length(l) + 1)
-            for (i = 1; i < NR - 1; i++) {
-                if (length(lines[i]) == 0) {
-                    continue
-                }
-                for (j = 1; j < length(indent); j++) {
-                    if (substr(indent, j, 1) != substr(lines[i], j, 1)) {
-                        indent = substr(indent, 0, j)
-                        break
-                    }
-                }
-            }
-
-            # Print all lines without the shared indent
-            for (i = 1; i < NR - 1; i++) {
-                sub("^" indent, "", lines[i])
-                print lines[i]
-            }
-        }
-    '
+    /bin/echo "$@" | awk -f "$PROJECT_TESTS_PATH/unindent.awk"
 }
 
 # Assert equals, with a diff
