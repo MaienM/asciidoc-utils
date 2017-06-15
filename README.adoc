@@ -26,11 +26,13 @@ is not tested in that you would like to see added to the list, open an issue
 
 == Usage
 
-Just source the needed functions from src. Beware that some functions depend on each other. To simply source everything, use the following command:
+```
+export ASCIIDOC_UTILS_PATH=/path/to/src
+. "$ASCIIDOC_UTILS_PATH/main.sh"
+```
 
-```
-eval $(find path/to/src -type f -name '*.sh' -exec echo . \'{}\'';' \;)
-```
+Depending on your shell it may not be neccesary to set `ASCIIDOC_UTILS_PATH`,
+but this uses shell specific, non-posix and potentially non-portable code.
 
 == Tests
 
