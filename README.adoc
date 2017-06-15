@@ -2,8 +2,8 @@
 
 Some utilities for scripts outputting and/or manipulating asciidoc.
 
-Should work in any posix compliant shell. The only dependency is a posix
-compliant AWK.
+Should work in any posix compliant shell. The only dependency are posix shell
+builtins and a posix compliant `awk` and `sed`
 
 Tested with the following shells:
 
@@ -14,15 +14,18 @@ Tested with the following shells:
 - mksh
 - zsh
 
-Tested with the following awks:
+Tested with the following `awk`s:
 
 - busybox awk (default for alpine)
-- gawk
+- gnu awk
 
-If you find any shells or awks that it does not work in please let me know by
-opening an issue. Additionally, if there are any common shells or awks that it
-is not tested in that you would like to see added to the list, open an issue
-(or pull request).
+Tested with the following `sed`s:
+
+- busybox sed (default for alpine)
+- gnu sed (default for debian)
+
+If you find any shells, `awk`s or `sed`s that it does not work in or which are
+not tested, please let me know by opening an issue (or pull request).
 
 == Usage
 
