@@ -35,6 +35,7 @@ done
 
 echo
 echo "== Awks"
+mkdir -p bin
 for awk in "${AWKS[@]}"; do
     echo
     echo "=== $awk"
@@ -43,5 +44,4 @@ for awk in "${AWKS[@]}"; do
     PATH="$PWD/bin:$PATH" bats tests || failed=1
 done
 
-mkdir bin
 exit $failed
