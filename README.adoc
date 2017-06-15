@@ -2,10 +2,35 @@
 
 Some utilities for scripts outputting and/or manipulating asciidoc.
 
+Should work in any posix compliant shell. The only dependency is a posix
+compliant AWK.
+
+Tested with the following shells:
+
+- dash (default sh for debian)
+- busybox sh (default sh for alpine)
+- bash
+- loksh
+- mksh
+- zsh
+
+Tested with the following awks:
+
+- busybox awk (default for alpine)
+- gawk
+
+If you find any shells or awks that it does not work in please let me know by
+opening an issue. Additionally, if there are any common shells or awks that it
+is not tested in that you would like to see added to the list, open an issue
+(or pull request).
+
 == Usage
 
-Just `source src/main.sh` in your script to import the functions. See the files
-in `src/` for the functions offered, or look at `tests/` for examples.
+Just source the needed functions from src. Beware that some functions depend on each other. To simply source everything, use the following command:
+
+```
+eval $(find path/to/src -type f -name '*.sh' -exec echo . \'{}\'';' \;)
+```
 
 == Tests
 

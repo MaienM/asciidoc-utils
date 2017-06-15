@@ -19,19 +19,29 @@ SHELLS=(
     /bin/zsh
 )
 AWKS=(
-    /usr/bin/awk
     /usr/bin/gawk
 )
 
-mkdir bin
 failed=0
+
+echo
+echo "== Shells"
 for BATS_SHELL in "${SHELLS[@]}"; do
-    for awk in "${AWKS[@]}"; do
-        echo
-        echo "== $BATS_SHELL with $awk"
-        echo
-        ln -sf "$awk" bin/awk
-        PATH="$PWD/bin:$PATH" bats tests || failed=1
-    done
+    echo
+    echo "=== $BATS_SHELL"
+    echo
+    bats tests || failed=1
 done
+
+echo
+echo "== Awks"
+for awk in "${AWKS[@]}"; do
+    echo
+    echo "=== $awk"
+    echo
+    ln -sf "$awk" bin/awk
+    PATH="$PWD/bin:$PATH" bats tests || failed=1
+done
+
+mkdir bin
 exit $failed

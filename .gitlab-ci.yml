@@ -17,4 +17,5 @@ build:
     script:
         - ci/build.sh
     artifacts:
-        - asciidoc-utils.sh
+        paths:
+            - 'asciidoc-utils.sh'
