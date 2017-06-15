@@ -10,7 +10,7 @@ apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
     dash
 
 SHELLS=(
-    /bin/sh
+    "/bin/busybox sh"
     /bin/bash
     "/bin/bash --posix"
     /bin/dash
@@ -19,6 +19,7 @@ SHELLS=(
     /bin/zsh
 )
 AWKS=(
+    "/bin/busybox awk"
     /usr/bin/gawk
 )
 
@@ -40,7 +41,9 @@ for awk in "${AWKS[@]}"; do
     echo
     echo "=== $awk"
     echo
-    ln -sf "$awk" bin/awk
+    echo "#!/bin/sh" > bin/awk
+    echo "$awk "'"$@"' >> bin/awk
+    chmod +x bin/awk
     PATH="$PWD/bin:$PATH" bats tests || failed=1
 done
 
