@@ -10,5 +10,7 @@ PROJECT_TESTS_PATH="$PROJECT_ROOT_PATH/tests"
 ASCIIDOC_UTILS_PATH="$PROJECT_SOURCES_PATH"
 
 # Load helper methods
-load helpers
+load helpers/runsh
+load helpers/unindent
+load helpers/assert_equals
 
