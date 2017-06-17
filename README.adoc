@@ -14,18 +14,18 @@ Tested with the following shells:
 - mksh
 - zsh
 
-Tested with the following `awk`s:
+Tested with the following implementations of `awk`:
 
 - busybox awk (default for alpine)
 - gnu awk
 
-Tested with the following `sed`s:
+Tested with the following implementations of `sed`:
 
 - busybox sed (default for alpine)
 - gnu sed (default for debian)
 
-If you find any shells, `awk`s or `sed`s that it does not work in or which are
-not tested, please let me know by opening an issue (or pull request).
+If you find any shells or implementations of `awk` or `sed` that do not work or
+which are not tested, please let me know by opening an issue (or pull request).
 
 == Usage
 
